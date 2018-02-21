@@ -1,8 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h2>Compro Socket</h2>
-  <input type="text" id="txtMsg" style="width:300px;height:35px" [(ngModel)]='messageText'>
-  <button (click)="sendMsg()">Send Message</button>
+<app-nav></app-nav>
+<div class="container">
+  <div class="starter-template">
+    <div style="text-align:center">
+      <h2>Write something nice</h2>
+      <div class="form-group">
+      <input type="text" id="txtMsg" class="form-control" [(ngModel)]='messageText'>
+    </div>
+      <button (click)="sendMsg()" class="btn btn-dark"><i class="fa fa-envelope-open"></i> Send Message</button>
+    </div>
+  </div>
 </div>
+<app-footer></app-footer>
+
 
 
