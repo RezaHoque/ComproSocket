@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from './websocket.service';
 import { ChatService } from './chat.service';
+import{ UserMessage } from './models/UserMessage';
+import { Timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,24 +10,36 @@ import { ChatService } from './chat.service';
   styleUrls: ['./app.component.css'],
   providers: [ WebsocketService, ChatService ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Compro Socket';
   messageText:string;
-  constructor(private chatService: ChatService) {
-		chatService.messages.subscribe(msg => {			
-      console.log("Response from websocket: " + "Sender: "+ msg.sender +" Message: "+msg.message);
-		});
-  }
-  
-  private message = {
-		sender: 'Reza',
-		message: 'this is a test message'
-	}
+  author:string;
+  public um:UserMessage;
 
-  sendMsg() {
-    this.message.message=this.messageText;
-		console.log('new message from client to websocket: ', this.message);
-		this.chatService.messages.next(this.message);
-		this.message.message = '';
-	}
+  constructor(private chat: ChatService){ }
+
+  ngOnInit() {
+    this.chat.messages.subscribe(msg => {
+      /*
+      let span = document.createElement('span');
+      let brk = document.createElement('br');
+      span.textContent = msg.text;
+      span.appendChild(brk);
+      document.body.appendChild(span);
+      */
+      console.log(msg);
+
+    })
+  }
+
+  sendMessage() {
+    this.um=new UserMessage();
+    this.um.author=this.author;
+    this.um.messageText=this.messageText;
+    this.um.sendingDate=new Date().getDate();
+
+    this.chat.sendMsg(this.um);
+
+    this.messageText = "";
+  }
 }

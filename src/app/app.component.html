@@ -5,9 +5,12 @@
     <div style="text-align:center">
       <h2>Write something nice</h2>
       <div class="form-group">
-      <input type="text" id="txtMsg" class="form-control" [(ngModel)]='messageText'>
+          <input type="text" id="txtMsg" class="form-control" [(ngModel)]='author' placeholder="nick name">
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtMsg" class="form-control" [(ngModel)]='messageText'placeholder="your message">
     </div>
-      <button (click)="sendMsg()" class="btn btn-dark"><i class="fa fa-envelope-open"></i> Send Message</button>
+      <button (click)="sendMessage()" class="btn btn-dark"><i class="fa fa-envelope-open"></i> Send </button>
     </div>
     <div>
       <p>Press F12 and see the console.</p>
