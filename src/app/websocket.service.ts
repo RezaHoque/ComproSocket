@@ -3,39 +3,49 @@ import * as Rx from 'rxjs/Rx';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../environments/environment';
+import { Room } from './models/Room';
 
 @Injectable()
 export class WebsocketService {
   private socket;
 
-  constructor() { }
+  constructor() { 
+    this.socket=io("http://localhost:5000");
+  }
 
   private subject:Rx.Subject<MessageEvent>;
-/*
-  public connect(url):Rx.Subject<MessageEvent>{
-    if(!this.subject){
-      this.subject=this.create(url);
-      console.log("Successfully connected: "+ url);
-    }
-    return this.subject;
-  }*/
+joinRoom(data){
+  this.socket.emit('start', JSON.stringify(data));
+}
+
 connect():Rx.Subject<MessageEvent>{
-  this.socket=io("http://localhost:5000");
+  
+  
+ 
   let observable=new Observable(observer=>{
     this.socket.on('message',(data)=>{
       console.log("Received message from Websocket Server. ");
-          observer.next(data);
-    })
+      observer.next(data);
+
+    });
+    this.socket.on('start',(room)=>{
+      console.log("Received room from Websocket Server. "+ room);
+      observer.next(room);
+    });
     return()=>{
       this.socket.disconnet();
     }
+   
   });
   let observer = {
     next: (data: Object) => {
-        this.socket.emit('message', JSON.stringify(data));
-    },
+      
+      this.socket.emit('message', JSON.stringify(data));
+   
+    }
   };
   return Rx.Subject.create(observer, observable);
+
 }
 /*
 private create(url):Rx.Subject<MessageEvent>{

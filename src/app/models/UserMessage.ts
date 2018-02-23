@@ -6,5 +6,6 @@ export class UserMessage{
     messageText:string;
     sendingDate:number;
     sendingTime:Time;
+    roomName:string;
     
 }

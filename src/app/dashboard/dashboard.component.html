@@ -1,0 +1,12 @@
+<app-nav></app-nav>
+<div class="container">
+  <div class="starter-template">
+      <div class="grid grid-pad">
+          <a *ngFor="let r of rooms" class="col-1-4">
+            <a href="/chat/{{r.RoomName}}">{{r.RoomName}}</a>
+            
+          </a>
+        </div>
+  </div>
+</div>
+<app-footer></app-footer>
