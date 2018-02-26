@@ -1,4 +1,5 @@
 export class Room {
-    RoomName:string;
-    TotalUser:number;
+    title:string;
+    author:number;
+    action_date:Date;
 }

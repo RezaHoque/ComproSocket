@@ -4,8 +4,7 @@ export class UserMessage{
     socketId:string;
     author:string;
     messageText:string;
-    sendingDate:number;
-    sendingTime:Time;
+    acton_Date:number;
     roomName:string;
     
 }

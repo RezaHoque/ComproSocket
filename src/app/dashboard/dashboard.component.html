@@ -1,12 +1,21 @@
 <app-nav></app-nav>
 <div class="container">
-  <div class="starter-template">
-      <div class="grid grid-pad">
-          <a *ngFor="let r of rooms" class="col-1-4">
-            <a href="/chat/{{r.RoomName}}">{{r.RoomName}}</a>
-            
-          </a>
-        </div>
+  <div class="starter-template" style="max-width:500px;margin-left:auto;margin-right:auto">
+    <div class="form-group">
+      <input type="text" id="txtName" class="form-control" placeholder="enter nickname" [(ngModel)]="nickName"/>
+    </div>
+  <!--
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *ngFor="let r of rooms">
+            <a href="/chat/{{r.RoomName}}" class="dropdown-item">{{r.RoomName}}</a>
+    </div>
+  -->
+
+  <select class="form-control" [(ngModel)]="roomName" >
+      <option>Select a Room</option>
+      <option *ngFor="let r of rooms">{{r.title}}</option>
+  </select>
+  <br/>
+  <button class="btn btn-dark" id="btnJoin" (click)="login()"><i class="fa fa-comments"></i>  Join</button>
   </div>
 </div>
 <app-footer></app-footer>

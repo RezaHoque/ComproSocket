@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
 import { Room } from './models/Room';
-import { ROOMS } from './models/mock-rooms';
+
 import { of } from 'rxjs/observable/of';
 import * as io from 'socket.io-client';
 import * as Rx from 'rxjs/Rx';
 import { environment } from '../environments/environment';
 import { UserMessage } from './models/UserMessage';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ChatService {
 
   private socket;
   private host="http://localhost:5000";
+  private roomEndpoint=this.host+"/api/rooms";
  
-  constructor() {
+  constructor(private http:HttpClient) {
     this.socket=io(this.host);
    }
 
@@ -23,10 +25,15 @@ export class ChatService {
     this.socket.emit("message",{msg});
   }
  joinRoom(data){
-   this.socket.emit("new_user",{Room:data});
+   this.socket.emit("new_user",{userroom:data});
+   //this.socket.emit("user_joined",)
  }
   getRooms():Observable<Room[]>{
-    return of(ROOMS);
+    return this.http.get(this.roomEndpoint)
+    .map(res  => {
+      //Maps the response object sent from the server       
+      return res["data"].docs as Room[];
+    })
   }
   updateChat() {
     let observable = new Observable<UserMessage>(observer => {
@@ -36,6 +43,14 @@ export class ChatService {
     });
 
     return observable;
+}
+userAdded(){
+  let observable=new Observable<any>(observer=>{
+    this.socket.on("user_joined",(data)=>{
+      observer.next(data);
+    });
+  });
+  return observable;
 }
 
 }
