@@ -36,14 +36,15 @@ rm.save(function(err){
 */
 io.on('connection', (socket) => {
 
-      // Log whenever a user connects
+    // Log whenever a user connects
     socket.on("new_user",function(data){
         console.log(data);
         socket.join(data.userroom.roomname,function(){
             
             var userroom=new user_room({
                 nickname:data.userroom.nickname,
-                roomname:data.userroom.roomname
+                roomname:data.userroom.roomname,
+                socket_id:socket.id
             });
             userroom.save(function(){
                 console.log(userroom.nickname +" just joind the room: "+ userroom.roomname);
@@ -56,6 +57,9 @@ io.on('connection', (socket) => {
     // Log whenever a client disconnects from our websocket server
     socket.on('disconnect', function(){
         console.log('a user disconnected');
+        //on disconnect, delete the user from the table.
+        user_room.deleteMany({socket_id:socket.id},function(err){});
+                
     });
    
     // When we receive a 'message' event from our client, print out

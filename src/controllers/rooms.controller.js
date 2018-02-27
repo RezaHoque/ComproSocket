@@ -17,3 +17,11 @@ exports.getRooms=async function(req,res,next){
         
     }
 }
+exports.getUsersInRoom=async function(req,res){
+    try{
+        var users=await roomServie.getUsersInRoom(req.params.roomname);
+        return res.status(200).json({status:200, data:users, message:"Successfully users received"});
+    }catch(e){
+        return res.status(400).json({status:400,message:req});
+    }
+}

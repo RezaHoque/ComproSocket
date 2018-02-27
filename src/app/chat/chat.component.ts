@@ -22,9 +22,11 @@ export class ChatComponent implements OnInit {
   rm:Room;
   connection:any;
   userroom:UserRoom;
-  
+  userrooms:UserRoom[];
+
   constructor(private chat: ChatService,private route:ActivatedRoute){
     this.ums=new Array<UserMessage>();
+    //this.userrooms=new Array<UserRoom>();
    }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class ChatComponent implements OnInit {
     this.chat.joinRoom(this.userroom);
     this.updateChat();
     this.userAdded();
+    this.updateUsersInRoom(this.userroom.roomname);
   }
 
   sendMessage() {
@@ -71,9 +74,16 @@ export class ChatComponent implements OnInit {
   }*/
   userAdded(){
     this.connection=this.chat.userAdded().subscribe((data)=>{
+      this.updateUsersInRoom(this.userroom.roomname);
       if(data){
         console.log(data);
       }
+    })
+  }
+
+  updateUsersInRoom(roomname){
+    this.connection=this.chat.getUsersInRoom(roomname).subscribe((users)=>{
+      this.userrooms=users;
     })
   }
 

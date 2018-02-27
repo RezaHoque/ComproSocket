@@ -9,6 +9,7 @@ import * as Rx from 'rxjs/Rx';
 import { environment } from '../environments/environment';
 import { UserMessage } from './models/UserMessage';
 import { HttpClient } from '@angular/common/http';
+import { UserRoom } from './models/UserRoom';
 
 @Injectable()
 export class ChatService {
@@ -51,6 +52,13 @@ userAdded(){
     });
   });
   return observable;
+}
+
+getUsersInRoom(roomname):Observable<UserRoom[]>{
+  return this.http.get(this.roomEndpoint +"/"+ roomname)
+  .map(res=> {
+  return res["data"] as UserRoom[];
+})
 }
 
 }

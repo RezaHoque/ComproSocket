@@ -25,7 +25,12 @@
           </div>
           
         </div>
-        <div class="col-3"></div>
+        <div class="col-3">
+            <ul *ngFor="let u of userrooms">
+                <li>{{u.nickname}}</li>
+
+            </ul>
+        </div>
       </div>
     </div>
     

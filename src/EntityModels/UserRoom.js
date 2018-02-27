@@ -4,7 +4,8 @@ var mongoose=require('mongoose');
 var UserRoomSchema=new mongoose.Schema({
     nickname:String,
     roomname:String,
-    joining_date:{type:Date,default:Date.now}
+    joining_date:{type:Date,default:Date.now},
+    socket_id:String
 });
 
 var userroom=mongoose.model("UserRooms",UserRoomSchema);
