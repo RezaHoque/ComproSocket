@@ -3,7 +3,15 @@
     <div class="starter-template">
       <div class="row">
         <div class="col-9" style="border-right:1px solid red">
-          <div id="chatbox"></div>
+          <div id="chatbox">
+              <ul *ngFor="let m of ums">
+                <li>
+                    <span>{{m.author}} wrote</span>
+                    <br/>
+                    <span>{{m.messageText}}</span>
+                </li>
+              </ul>
+          </div>
           <div id="chatmessages">
               <div class="form-row">
                   <div class="col-8">

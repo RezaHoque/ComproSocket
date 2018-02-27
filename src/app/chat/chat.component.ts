@@ -23,7 +23,9 @@ export class ChatComponent implements OnInit {
   connection:any;
   userroom:UserRoom;
   
-  constructor(private chat: ChatService,private route:ActivatedRoute){ }
+  constructor(private chat: ChatService,private route:ActivatedRoute){
+    this.ums=new Array<UserMessage>();
+   }
 
   ngOnInit() {
     this.userroom=new UserRoom();
@@ -55,6 +57,7 @@ export class ChatComponent implements OnInit {
       return data["usermsg"] as UserMessage;
     }).subscribe(data=>{
       console.log(data.author +" wrote "+ data.messageText+ " to "+ data.roomName+ " at "+ data.acton_Date);
+      this.ums.push(data);
     });
   }
   /*
