@@ -1,2 +1,2 @@
-## Welcome to Compro Socket
-Compro Socket is a chat app developed with Angular 2 and WebSocket.
+## Compro Socket
+It is a chat app developed with Angular 2 and WebSocket mainly. Other technologies used are MongoDB and Node.js server.
